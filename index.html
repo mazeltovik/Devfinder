@@ -10,11 +10,56 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&display=swap" rel="stylesheet">
+  <script>
+    window.onload = function(){
+      let switcher = document.getElementsByClassName('switcher');
+      console.log(switcher);
+      switcher[0].addEventListener('click',function(event){
+        let self = this;
+        if(document.body.classList.contains('ligth_mode_body')){
+          ligthOff(self);
+        }
+        else ligthOn(self);
+      });
+      function ligthOn(self){
+        self.children[0].innerHTML = 'dark';
+        self.children[0].style.color = '#141c2f';
+        self.children[1].style.color = '#141c2f';
+        self.children[1].className = 'fas fa-moon';
+        document.body.classList.add('ligth_mode_body');
+        document.querySelector('.logo p').style.color = '#141c2f';
+        document.querySelector('.search_input').style.backgroundColor = 'white';
+        document.querySelector('.search_input').style.boxShadow = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
+        document.querySelector('.info').style.backgroundColor = 'white';
+        document.querySelector('.info').style.color='gray';
+        document.querySelector('.info').style.boxShadow = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
+        document.querySelector('.subscribe').style.backgroundColor = 'gray';
+      }
+
+      function ligthOff(self){
+        self.children[0].innerHTML = 'ligth';
+        self.children[0].style.color = 'white';
+        self.children[1].style.color = 'white';
+        self.children[1].className = 'fas fa-sun';
+        document.body.classList.remove('ligth_mode_body');
+        document.querySelector('.logo p').style.color = 'white';
+        document.querySelector('.search_input').style.backgroundColor = '#1f2a48';
+        document.querySelector('.search_input').style.boxShadow = '';
+        document.querySelector('.info').style.backgroundColor = '#1f2a48';
+        document.querySelector('.info').style.color='white';
+        document.querySelector('.info').style.boxShadow = '';
+        document.querySelector('.subscribe').style.backgroundColor = '#141c2f';
+      }
+    }
+  </script>
 </head>
 <body>
   <div class = 'devfinder_window'>
       <div class = 'logo'>
         <p>devfinder</p>
+        <div class = 'switcher'>
+          <span>light</span><i class="fas fa-sun"></i>
+        </div>
       </div>
       <div class = 'search'>
         <i class="fas fa-search seacrh_img"></i>
