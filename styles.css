@@ -128,7 +128,7 @@ body{
     padding: 1rem 1rem 0 1rem;
     display:grid;
     grid-template-columns: 0.3fr 0.7fr;
-    grid-template-rows: 0.2fr 0.2fr 0.2fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 0.5fr;
     grid-template-areas:
     'img login'
     'img name'
@@ -224,10 +224,11 @@ body{
 
 .contact_info{
     display: grid;
+    
     gap:1rem;
     padding: 1rem 1rem 0 1rem;
     padding-bottom: 2rem;
-    
+    font-size: 0.8rem;
 }
 
 .contact_info span{
@@ -235,12 +236,17 @@ body{
 }
 
 .contact_info a{
+    opacity: 80%;
+    color:white;
+    text-decoration: none;
     padding-left: 1rem;
     cursor: pointer;
 }
 
 .contact_info a:hover{
-   border-bottom: 1px solid gray;
+    transition: 0.3s;
+    opacity: 100%;
+    border-bottom: 1px solid gray;
 }
 
 @media only screen and (min-width : 800px){
@@ -265,10 +271,13 @@ body{
     }
 
     .contact_info{
+        font-size: 1rem;
         margin-left: 15vw;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
     }
+
+    
 }
 
 
