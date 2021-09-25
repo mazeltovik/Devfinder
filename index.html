@@ -12,15 +12,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,700&display=swap" rel="stylesheet">
   <script>
     window.onload = function(){
+      //global variable initialization in ui function;
+      let ui;
       let switcher = document.getElementsByClassName('switcher');
-      console.log(switcher);
       switcher[0].addEventListener('click',function(event){
-        let self = this;
         if(document.body.classList.contains('ligth_mode_body')){
-          ligthOff(self);
+          ligthOff(this);
         }
-        else ligthOn(self);
+        else{
+          ligthOn(this);
+        }
       });
+      //change theme on ligth
       function ligthOn(self){
         self.children[0].innerHTML = 'dark';
         self.children[0].style.color = '#141c2f';
@@ -29,13 +32,16 @@
         document.body.classList.add('ligth_mode_body');
         document.querySelector('.logo p').style.color = '#141c2f';
         document.querySelector('.search_input').style.backgroundColor = 'white';
+        document.querySelector('.search_input').style.color='black';
         document.querySelector('.search_input').style.boxShadow = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
         document.querySelector('.info').style.backgroundColor = 'white';
         document.querySelector('.info').style.color='gray';
         document.querySelector('.info').style.boxShadow = '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
         document.querySelector('.subscribe').style.backgroundColor = 'gray';
+        document.querySelector('.git_link a').style.color='gray';
+        document.querySelector('.mail_link a').style.color='gray';
       }
-
+      //change theme on dark
       function ligthOff(self){
         self.children[0].innerHTML = 'ligth';
         self.children[0].style.color = 'white';
@@ -44,11 +50,72 @@
         document.body.classList.remove('ligth_mode_body');
         document.querySelector('.logo p').style.color = 'white';
         document.querySelector('.search_input').style.backgroundColor = '#1f2a48';
+        document.querySelector('.search_input').style.color='white';
         document.querySelector('.search_input').style.boxShadow = '';
         document.querySelector('.info').style.backgroundColor = '#1f2a48';
         document.querySelector('.info').style.color='white';
         document.querySelector('.info').style.boxShadow = '';
         document.querySelector('.subscribe').style.backgroundColor = '#141c2f';
+      }
+      let searchInput = document.querySelector('.search_input');
+      searchInput.addEventListener('change',function(event){
+        let self = this;
+        let buttonSearch = document.querySelector('.search_button');
+        buttonSearch.addEventListener('click',function(event){
+          let userName = self.value;
+          request(userName);
+        });
+        request(this.value);
+      });
+      async function request(userName){
+        let obj;
+        let response = await fetch(`https://api.github.com/users/${userName}`);
+        if(response.ok){
+          obj = await response.json();
+          uiInit(obj);
+        }
+        else alert('Not found! Please enter right login.');
+      }
+      //initialization ui
+      function uiInit(getInfo){
+        ui = {
+          profile_img:null,
+          login:null,
+          name:null,
+          created:null,
+          bio:null,
+          location:null,
+          git_link:null,
+          twitter_link:null,
+          mail_link:null,
+          repos:null,
+          followers:null,
+          following:null,
+        };
+        for(let id in ui){
+          ui[id] = document.getElementById(id);
+        }
+        function display(ui,getInfo){
+          ui.profile_img.children[0].src = getInfo['avatar_url'];
+          ui.login.children[0].textContent = getInfo.login;
+          ui.name.children[0].textContent = getInfo.name||'Not Available';
+          ui.created.children[0].textContent = 'Joined ' + getDate(getInfo['created_at']);
+          ui.bio.children[0].textContent = getInfo.bio||'This profile has no bio';
+          ui.repos.children[0].textContent = getInfo['public_repos'];
+          ui.followers.children[0].textContent = getInfo.followers;
+          ui.following.children[0].textContent = getInfo.following;
+          ui.location.children[1].textContent = getInfo.location||'Not Available';
+          ui['git_link'].children[1].href = getInfo['html_url'];
+          ui['git_link'].children[1].textContent = getInfo['html_url']||'Not Available';
+          ui['twitter_link'].children[1].textContent = getInfo['twitter_username']||'Not Available';
+          ui['mail_link'].children[1].href = getInfo['email'];
+          ui['mail_link'].children[1].textContent = getInfo['email']||'Not Available';
+        }
+        function getDate(created){
+          let date = String(new Date(created)).slice(4,15);
+          return date.replace(/(\w+) (\d+)/i, '$2 $1');
+        }
+        display(ui,getInfo);
       }
     }
   </script>
@@ -68,11 +135,11 @@
       </div>
       <div class = 'info'>
         <div class = 'header_info'>
-          <div class="profile_img"><img src='github_image.png'></div>
-          <div class = 'login'><p>The Octocat</p></div>
-          <div class = 'name'><p>octocat</p></div>
-          <div class='created'><p>2015-09-14T20:18:35Z</p></div>
-          <div class = 'bio'><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget neque non ligula egestas tempor nec at tellus. Sed massa est, congue eu erat id, ultrices finibus quam. Nulla facilisis suscipit facilisis. Morbi lectus nisl, pellentesque id auctor eu, luctus eu ipsum. Sed rhoncus scelerisque erat et interdum. Ut pretium facilisis hendrerit. Cras ullamcorper iaculis eros consectetur ultrices. Vestibulum placerat augue quam, id vulputate velit sagittis non.</p></div>
+          <div class="profile_img" id="profile_img"><img src='github_image.png'></div>
+          <div class = 'login' id = 'login'><p>The Octocat</p></div>
+          <div class = 'name' id = 'name' ><p>octocat</p></div>
+          <div class='created' id='created'><p>Joined 25 Feb 2021</p></div>
+          <div class = 'bio' id = 'bio'><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget neque non ligula egestas tempor nec at tellus. Sed massa est, congue eu erat id, ultrices finibus quam. Nulla facilisis suscipit facilisis. Morbi lectus nisl, pellentesque id auctor eu, luctus eu ipsum. Sed rhoncus scelerisque erat et interdum. Ut pretium facilisis hendrerit. Cras ullamcorper iaculis eros consectetur ultrices. Vestibulum placerat augue quam, id vulputate velit sagittis non.</p></div>
         </div>
         <div class='subscribe'>
           <div class='type_subscribe'>
@@ -81,23 +148,23 @@
             <div><p>Following</p></div>
           </div>
           <div class='conten_subscribe'>
-            <div><p>9</p></div>
-            <div><p>3804</p></div>
-            <div><p>9</p></div>
+            <div id = 'repos'><p>9</p></div>
+            <div id = 'followers'><p>3804</p></div>
+            <div id = 'following'><p>9</p></div>
           </div>
         </div>
         <div class='contact_info'>
-          <div class="location">
-            <i class="fas fa-map-marker-alt"></i><span>Minsk-efwefhwuh</span>
+          <div class="location" id='location'>
+            <i class="fas fa-map-marker-alt"></i><span>Octocat</span>
           </div>
-          <div class="git_link">
-            <i class="fas fa-link"></i><a src='#'>Mazeltvik github</a>
+          <div class="git_link" id = 'git_link'>
+            <i class="fas fa-link"></i><a href='#'>Octocat github</a>
           </div>
-          <div class="twitter_link">
-            <i class="fab fa-twitter"></i><a src='#'>Mazeltvik github</a>
+          <div class="twitter_link" id = 'twitter_link'>
+            <i class="fab fa-twitter"></i><span>Octocat Twitter</span>
           </div>
-          <div class='mail_link'>
-            <i class="far fa-envelope"></i><a src='#'>Mazeltvik github</a>
+          <div class='mail_link' id = 'mail_link'>
+            <i class="far fa-envelope"></i><a href='#'>Octocat Mail</a>
           </div>
         </div>
       </div>
