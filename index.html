@@ -111,9 +111,11 @@
           ui['twitter_link'].children[1].textContent = getInfo['twitter_username']||'Not Available';
           ui['mail_link'].children[1].href = getInfo['email'];
           ui['mail_link'].children[1].textContent = getInfo['email']||'Not Available';
-          animate('count1');
-          animate('count2');
-          animate('count3');
+          setTimeout(()=>{
+            animate('count1');
+            animate('count2');
+            animate('count3');
+          },0);
         }
         function getDate(created){
           let date = String(new Date(created)).slice(4,15);
