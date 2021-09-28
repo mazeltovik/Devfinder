@@ -119,6 +119,7 @@ body{
 }
 
 .info{
+    
     background-color: #1f2a48;
     border-radius: 1rem;
     color:white
@@ -213,7 +214,7 @@ body{
 
 .conten_subscribe{
     display: flex;
-    justify-content: space-around
+    justify-content: space-around;
 }
 
 .conten_subscribe p{
@@ -227,7 +228,7 @@ body{
     gap:1rem;
     padding: 1rem 1rem 0 1rem;
     padding-bottom: 2rem;
-    font-size: 1rem;
+    font-size: 2.2vh;
     
 }
 
@@ -276,6 +277,7 @@ body{
     }
 
     .contact_info{
+        font-size: 1rem;
         margin-left: 15vw;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;

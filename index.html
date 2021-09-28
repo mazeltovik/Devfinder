@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href = 'styles.css' type='text/css' rel = 'stylesheet'>
   <title>devfinder</title>
+  <script src = 'jquery-3.6.0.min.js'></script>
   <script src="https://kit.fontawesome.com/548e162b60.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +14,7 @@
   <script>
     window.onload = function(){
       //global variable initialization in ui function;
-      let ui;
+      let ui,state;
       let switcher = document.getElementsByClassName('switcher');
       switcher[0].addEventListener('click',function(event){
         if(document.body.classList.contains('ligth_mode_body')){
@@ -110,6 +111,9 @@
           ui['twitter_link'].children[1].textContent = getInfo['twitter_username']||'Not Available';
           ui['mail_link'].children[1].href = getInfo['email'];
           ui['mail_link'].children[1].textContent = getInfo['email']||'Not Available';
+          animate('count1');
+          animate('count2');
+          animate('count3');
         }
         function getDate(created){
           let date = String(new Date(created)).slice(4,15);
@@ -117,6 +121,19 @@
         }
         display(ui,getInfo);
       }
+      function animate(classN){
+        $('.' + classN).each(function () {
+          $(this).prop('Counter',0).animate({
+          Counter: $(this).text()
+        }, {
+          duration: 2000,
+          easing: 'swing',
+          step: function (now) {
+            $(this).text(Math.ceil(now));
+            }
+          });
+        });
+      } 
     }
   </script>
 </head>
@@ -148,9 +165,9 @@
             <div><p>Following</p></div>
           </div>
           <div class='conten_subscribe'>
-            <div id = 'repos'><p>9</p></div>
-            <div id = 'followers'><p>3804</p></div>
-            <div id = 'following'><p>9</p></div>
+            <div id = 'repos'><p class = 'count1'>0</p></div>
+            <div id = 'followers'><p class = 'count2'>0</p></div>
+            <div id = 'following'><p class = 'count3'>0</p></div>
           </div>
         </div>
         <div class='contact_info'>
