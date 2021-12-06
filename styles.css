@@ -83,15 +83,14 @@ body{
 .search_input::-webkit-input-placeholder { 
     color:gray;
     font-weight: 500; 
-    font-size: 1rem;
+    font-size: 0.7rem;
 }
 
 
 .search_button{
-    opacity: 70%;
     position: absolute;
     cursor: pointer;
-    right: 0.1rem;
+    right: 0;
     color: white;
     background-color: #0079fe;
     border: none;
@@ -100,11 +99,22 @@ body{
     font-size: 1rem;
     padding: 0.7rem 0.8rem 0.8rem 0.8rem;
     border-radius: 0.8rem;
+    z-index:99;
 }
 
-.search_button:hover{
-    opacity: 100%;
-}
+svg{
+    height: 1rem;
+    position: absolute;
+    cursor: pointer;
+  }
+
+.search_delete{
+    fill: #c7ccdb;
+    right: 3rem;
+    display: none;
+  }
+
+
 
 .fa-search{
     position: absolute;
@@ -210,6 +220,7 @@ body{
     color: white;
     opacity: 80%;
     font-size: 1rem;
+    text-align: center;
 }
 
 .conten_subscribe{
@@ -221,6 +232,7 @@ body{
     color: white;
     opacity: 80%;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 .contact_info{
@@ -283,6 +295,11 @@ body{
         grid-template-rows: 1fr 1fr;
     }
 
+    .search_input::-webkit-input-placeholder { 
+        font-size: 1rem;
+    }
+
+    
     
 }
 
